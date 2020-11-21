@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
+	"time"
 
 	"github.com/apache/pulsar-client-go/pulsar"
 )
@@ -20,7 +20,7 @@ func main() {
 	defer client.Close()
 
 	producer, err := client.CreateProducer(pulsar.ProducerOptions{
-		Topic: "topic-1",
+		Topic: "orders",
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -30,13 +30,14 @@ func main() {
 
 	ctx := context.Background()
 
-	for i := 0; i < 10; i++ {
-		if msgId, err := producer.Send(ctx, &pulsar.ProducerMessage{
-			Payload: []byte(fmt.Sprintf("hello-%d", i)),
+	for {
+		if msgID, err := producer.Send(ctx, &pulsar.ProducerMessage{
+			Payload: []byte(`{ "status": "delievered" }`),
 		}); err != nil {
 			log.Fatal(err)
 		} else {
-			log.Println("Published message: ", msgId)
+			log.Println("Published message: ", msgID)
 		}
+		time.Sleep(8 * time.Second)
 	}
 }

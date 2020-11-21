@@ -1,12 +1,19 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log"
 
 	"github.com/apache/pulsar-client-go/pulsar"
 )
+
+func subscribe(client pulsar.Client, topic string) (pulsar.Consumer, error) {
+	return client.Subscribe(pulsar.ConsumerOptions{
+		Topic:            topic,
+		SubscriptionName: "subscription_1",
+		Type:             pulsar.Shared,
+	})
+}
 
 func main() {
 	client, err := pulsar.NewClient(pulsar.ClientOptions{URL: "pulsar://pulsar:6650"})
@@ -16,25 +23,23 @@ func main() {
 
 	defer client.Close()
 
-	consumer, err := client.Subscribe(pulsar.ConsumerOptions{
-		Topic:            "topic-1",
-		SubscriptionName: "my-sub",
-		Type:             pulsar.Shared,
-	})
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	consumer, err := subscribe(client, "orders");
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	defer consumer.Close()
 
-	for i := 0; i < 10; i++ {
-		msg, err := consumer.Receive(context.Background())
-		if err != nil {
-			log.Fatal(err)
-		}
-
+	channel := consumer.Chan()
+	
+	for msg := range(channel) {
 		fmt.Printf("Received message msgId: %#v -- content: '%s'\n",
 			msg.ID(), string(msg.Payload()))
-
 		consumer.Ack(msg)
 	}
 

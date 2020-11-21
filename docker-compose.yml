@@ -22,14 +22,14 @@ services:
     command: go run src/producer.go
     volumes:
       - ".:/var/app"
-  dashboard:
-    image: apachepulsar/pulsar-manager:v0.2.0
-    ports:
-      - "9527:9527"
-      - "7750:7750"
-    depends_on:
-      - pulsar
-    links:
-      - pulsar
-    environment:
-      SPRING_CONFIGURATION_FILE: /pulsar-manager/pulsar-manager/application.properties
+  # dashboard:
+  #   image: apachepulsar/pulsar-manager:v0.2.0
+  #   ports:
+  #     - "9527:9527"
+  #     - "7750:7750"
+  #   depends_on:
+  #     - pulsar
+  #   links:
+  #     - pulsar
+  #   environment:
+  #     SPRING_CONFIGURATION_FILE: /pulsar-manager/pulsar-manager/application.properties
