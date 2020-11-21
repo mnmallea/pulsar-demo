@@ -10,6 +10,18 @@ services:
     restart: unless-stopped
     volumes:
       - "./data/:/pulsar/data"
+  consumer:
+    build:
+      context: .
+    command: go run src/consumer.go
+    volumes:
+      - ".:/var/app"
+  producer:
+    build:
+      context: .
+    command: go run src/producer.go
+    volumes:
+      - ".:/var/app"
   dashboard:
     image: apachepulsar/pulsar-manager:v0.2.0
     ports:
