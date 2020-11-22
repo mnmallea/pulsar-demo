@@ -13,13 +13,13 @@ services:
   consumer:
     build:
       context: .
-    command: go run src/consumer.go
+    command: npm run consumer
     volumes:
       - ".:/var/app"
   producer:
     build:
       context: .
-    command: go run src/producer.go
+    command: npm run producer
     volumes:
       - ".:/var/app"
   # dashboard:
