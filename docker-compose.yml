@@ -16,12 +16,16 @@ services:
     command: npm run consumer
     volumes:
       - ".:/var/app"
+    depends_on:
+      - pulsar
   producer:
     build:
       context: .
     command: npm run producer
     volumes:
       - ".:/var/app"
+    depends_on:
+      - pulsar
   # dashboard:
   #   image: apachepulsar/pulsar-manager:v0.2.0
   #   ports:
