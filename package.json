@@ -13,6 +13,8 @@
     "url": "git+https://github.com/mnmallea/pulsar-demo.git"
   },
   "dependencies": {
+    "avro-js": "^1.10.0",
+    "axios": "^0.21.0",
     "pulsar-client": "1.2.0",
     "uuid": "8.3.1"
   },

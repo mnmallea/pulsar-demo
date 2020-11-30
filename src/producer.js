@@ -2,6 +2,7 @@ const { inspect } = require('util');
 const { v4: uuidv4 } = require('uuid');
 
 const client = require('./client');
+const { MEASUREMENTS_TOPIC } = require('./topics');
 
 const MESSAGE_DELAY_MS = 2000;
 
@@ -25,7 +26,7 @@ const produceMessages = async producer => {
 }
 
 client.createProducer({
-  topic: 'orders',
+  topic: MEASUREMENTS_TOPIC,
 })
   .catch(e => {
     console.error(`Error when creating producer: ${inspect(e)}`);

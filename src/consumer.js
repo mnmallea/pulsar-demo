@@ -1,6 +1,7 @@
 const { inspect } = require('util');
 
 const client = require('./client');
+const { MEASUREMENTS_TOPIC } = require('./topics');
 
 const consumeMessages = async consumer => {
   while (true) {
@@ -11,7 +12,7 @@ const consumeMessages = async consumer => {
 }
 
 client.subscribe({
-  topic: 'orders',
+  topic: MEASUREMENTS_TOPIC,
   subscription: 'sub_1',
   subscriptionType: 'Shared'
 })
