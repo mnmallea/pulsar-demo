@@ -11,10 +11,15 @@ const consumeMessages = async consumer => {
   }
 }
 
+const subscriptionName = process.env.SUBSCRIPTION_NAME || 'sub_1';
+const subscriptionType = process.env.SUBSCRIPTION_TYPE || 'Shared';
+
+console.log(`Creating subscription with name "${subscriptionName}" to topic "${MEASUREMENTS_TOPIC}" with type "${subscriptionType}"`);
+
 client.subscribe({
   topic: MEASUREMENTS_TOPIC,
-  subscription: 'sub_1',
-  subscriptionType: 'Shared'
+  subscription: subscriptionName,
+  subscriptionType
 })
   .catch(e => {
     console.error(`Error when creating producer: ${inspect(e)}`);
