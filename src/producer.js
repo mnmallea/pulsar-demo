@@ -10,13 +10,15 @@ const sleep = (ms) => new Promise(resolve => {
   setTimeout(() => resolve(), ms);
 });
 
+const createMeasurement = () => ({
+  id: uuidv4(),
+  temperature: Math.ceil(Math.random() * 35),
+  timestamp: new Date().toISOString()
+})
+
 const produceMessages = async producer => {
   while (true) {
-    const message = JSON.stringify({
-      id: uuidv4(),
-      temperature: Math.ceil(Math.random() * 35),
-      timestamp: new Date().toISOString()
-    });
+    const message = JSON.stringify(createMeasurement());
     console.log(`Sending message: ${message}`)
     await producer.send({
       data: Buffer.from(message),

@@ -13,7 +13,7 @@ curl \
 
 ## Create schema
 ```sh
-docker-compose exec producer -- node src/create_schemas.js
+docker-compose run producer node src/create_schemas.js
 ```
 
 ## Open pulsar SQL
